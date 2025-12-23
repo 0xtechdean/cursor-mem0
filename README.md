@@ -82,6 +82,15 @@ The hooks will be active after restart.
 | `MEM0_AUTO_SAVE` | Auto-save prompts | `true` |
 | `MEM0_SAVE_MESSAGES` | Messages to save on stop | `10` |
 
+## Testing
+
+Run the test suite:
+
+```bash
+pip install pytest
+python -m pytest tests/ -v
+```
+
 ## License
 
 MIT
