@@ -20,8 +20,18 @@ from pathlib import Path
 
 
 def load_env_file():
-    """Load .env file from workspace if it exists."""
-    # Try workspace roots from Cursor input
+    """Load .env file from workspace or global config."""
+    # Try global ~/.cursor/.env first
+    global_env = Path.home() / ".cursor" / ".env"
+    if global_env.exists():
+        with open(global_env) as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith("#") and "=" in line:
+                    key, value = line.split("=", 1)
+                    os.environ.setdefault(key.strip(), value.strip())
+
+    # Try workspace roots from Cursor input (overrides global)
     try:
         input_data = json.loads(os.environ.get("CURSOR_HOOK_INPUT", "{}"))
         workspace_roots = input_data.get("workspace_roots", [])
@@ -33,12 +43,12 @@ def load_env_file():
                         line = line.strip()
                         if line and not line.startswith("#") and "=" in line:
                             key, value = line.split("=", 1)
-                            os.environ.setdefault(key.strip(), value.strip())
+                            os.environ[key.strip()] = value.strip()
                 break
     except:
         pass
 
-    # Also try current directory
+    # Also try current directory (overrides global)
     env_path = Path.cwd() / ".env"
     if env_path.exists():
         with open(env_path) as f:
@@ -46,7 +56,7 @@ def load_env_file():
                 line = line.strip()
                 if line and not line.startswith("#") and "=" in line:
                     key, value = line.split("=", 1)
-                    os.environ.setdefault(key.strip(), value.strip())
+                    os.environ[key.strip()] = value.strip()
 
 
 def get_config():

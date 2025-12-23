@@ -32,7 +32,7 @@ pip install mem0ai
 
 ### 3. Configure environment
 
-Create a `.env` file in your project:
+Create a `.env` file in your project or globally in `~/.cursor/.env`:
 
 ```bash
 MEM0_API_KEY=your-api-key-here
@@ -43,6 +43,8 @@ MEM0_TOP_K=5
 MEM0_THRESHOLD=0.3
 MEM0_AUTO_SAVE=true
 ```
+
+**Priority**: Project `.env` overrides global `~/.cursor/.env`
 
 Get your API key from [app.mem0.ai](https://app.mem0.ai)
 
