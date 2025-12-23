@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "hooks": {
+    "beforeSubmitPrompt": [
+      {
+        "command": "python3 .cursor/hooks/memory_retrieve.py"
+      }
+    ],
+    "stop": [
+      {
+        "command": "python3 .cursor/hooks/memory_save.py"
+      }
+    ]
+  }
+}
